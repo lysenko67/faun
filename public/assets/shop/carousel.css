@@ -1,0 +1,95 @@
+.carousel-indicators {
+    position: relative;
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 70px;
+    height: 70px;
+}
+
+.basket {
+    position: relative;
+}
+
+.qty {
+    font-size: 10px;
+    line-height: 13px;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    /*display: none;*/
+    min-width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 3px;
+    right: -8px;
+    background: #02ac02;
+    padding: 2px 3px 1px;
+    border-radius: 16px;
+}
+
+.show-qty {
+    display: inline-block;
+}
+/*--------------------------------------------------------*/
+header {
+    padding-top: 10px;
+    box-shadow: 0px 2px 4px -1px rgba(122,122,122,0.5),  0px 1px 10px 0px rgba(122,122,122,0.5);
+}
+.nav-header {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+a {
+    color: black;
+    text-decoration: none;
+}
+
+.n-item {
+    list-style: none;
+}
+.n-link {
+    color: #7c7c7c;
+}
+
+a:hover {
+    color: black;
+}
+.search {
+    background-color: inherit;
+}
+
+.search-input {
+    border-left: none;
+}
+.input-group {
+    width: 86%;
+}
+input[type="text"]:focus {
+    box-shadow: none !important;
+    border: 1px solid #ced4da;
+    border-left: none;
+}
+
+.page-link {
+    margin: 12px;
+    background-color: #eeeeee;
+    color: #7c7c7c;
+}
+
+page-link:active {
+    outline: none;
+    border: none;
+}
+
+.page-item.active .page-link {
+    background-color: #999999;
+    border-color: #999999;
+    outline: none;
+}
+
+
+
