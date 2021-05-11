@@ -28,7 +28,7 @@ class StoreProduct extends FormRequest
             'description' => 'required',
             'content' => 'required',
             'category_id' => 'required|integer',
-            'thumbnail' => 'nullable|image',
+
         ];
     }
 }

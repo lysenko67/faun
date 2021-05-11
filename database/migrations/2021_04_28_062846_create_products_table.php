@@ -21,11 +21,11 @@ class CreateProductsTable extends Migration
                 ->references('id')
                 ->on('categories')
                 ->onDelete('cascade');
-            $table->string('author');
+            $table->string('author')->nullable();
             $table->string('title');
             $table->text('description');
             $table->integer('price');
-            $table->boolean('in_stock');
+            $table->boolean('in_stock')->default(0);
             $table->timestamps();
         });
     }
