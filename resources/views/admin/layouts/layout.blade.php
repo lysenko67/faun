@@ -162,6 +162,82 @@
 <script src="{{asset('assets/admin/js/adminlte.min.js')}}"></script>
 {{--<!-- AdminLTE for demo purposes -->--}}
 {{--<script src="../../dist/js/demo.js"></script>--}}
+{{--<script>--}}
+{{--    const input = document.getElementById('file')--}}
+{{--    const forms = document.forms.my.elements--}}
+{{--    const formData = new FormData()--}}
+{{--    let num = {i: -1}--}}
+
+{{--    document.getElementById('addFormData').addEventListener('click', (e) => {--}}
+{{--        fetch('files', {--}}
+{{--            method: "POST",--}}
+{{--            headers: {--}}
+{{--                'X-CSRF-TOKEN': document.getElementById('token').getAttribute('content')--}}
+{{--            },--}}
+{{--            body: formsSerialize(forms)--}}
+{{--        })--}}
+{{--            .then(response => response.json())--}}
+{{--            .then(res => {--}}
+{{--                console.log(res)--}}
+{{--                window.location.href = 'http://faun.loc/admin/products'--}}
+{{--            })--}}
+{{--            .catch(err => alert('Ошибка! Попробуйте ещё раз.'))--}}
+{{--    })--}}
+
+{{--    input.addEventListener('change', function (e) {--}}
+{{--        num.i = num.i + 1--}}
+{{--        console.log(num.i)--}}
+{{--        const img = input.files[0]--}}
+{{--        formData.append('files[' + num.i + ']', img)--}}
+{{--        console.log(formData)--}}
+{{--        handleFiles(img)--}}
+{{--    })--}}
+
+{{--    preview.addEventListener('click', function (e) {--}}
+{{--        if (e.target.getAttribute('class') === 'img-close') {--}}
+{{--            let id = e.target.getAttribute('id')--}}
+{{--            console.log(id)--}}
+{{--            let del = confirm("Удалить это фото?")--}}
+{{--            if (del) {--}}
+{{--                formData.delete('files[' + id + ']')--}}
+{{--                preview.removeChild(e.target.parentNode);--}}
+{{--            }--}}
+{{--        }--}}
+{{--    })--}}
+
+{{--    function formsSerialize(forms) {--}}
+{{--        for (let i = 0; i < forms.length; i++) {--}}
+{{--            formData.append(forms[i].name, forms[i].value)--}}
+{{--        }--}}
+{{--        return formData--}}
+{{--    }--}}
+
+{{--    function handleFiles(file) {--}}
+{{--        let div = document.createElement("div")--}}
+{{--        div.classList.add("preview-img")--}}
+
+{{--        let span = document.createElement("div")--}}
+{{--        span.classList.add("img-close")--}}
+{{--        span.innerHTML = 'del'--}}
+{{--        span.id = num.i--}}
+
+{{--        let img = document.createElement("img")--}}
+{{--        img.style.width = '200px'--}}
+{{--        img.file = file--}}
+
+{{--        div.append(img)--}}
+{{--        div.append(span)--}}
+{{--        preview.appendChild(div)--}}
+
+{{--        let reader = new FileReader()--}}
+{{--        reader.onload = (function (aImg) {--}}
+{{--            return function (e) {--}}
+{{--                aImg.src = e.target.result--}}
+{{--            };--}}
+{{--        })(img);--}}
+{{--        reader.readAsDataURL(file)--}}
+{{--    }--}}
+{{--</script>--}}
 </body>
 </html>
 

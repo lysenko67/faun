@@ -21,6 +21,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category')->paginate(10);
+
         return view('admin.products.index', compact('products'));
     }
 
@@ -68,8 +69,8 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $categories = Category::pluck('title', 'id')->all();
-//        $tags = Tag::pluck('title', 'id')->all();
-        return view('admin.products.edit', compact('categories', 'product'));
+        $images = $product->images;
+        return view('admin.products.edit', compact('categories', 'product', 'images'));
     }
 
     /**
@@ -102,8 +103,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        $product->tags()->sync([]);
-        Storage::delete($product->thumbnail);
+        Storage::deleteDirectory('public/images/' . $id);
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Продукт удален');
     }
