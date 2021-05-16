@@ -10,8 +10,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(3);
-dd($products);
+        $products = Product::paginate(10);
+//        dd($products);
         return view('shop.home.index', compact('products'));
     }
 }

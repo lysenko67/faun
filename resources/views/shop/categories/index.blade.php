@@ -18,7 +18,7 @@
                                 <h6 class="card-subtitle mb-2 text-muted">Подзаголовок карты</h6>
                                 <a href="{{route('category.index', $product->category['slug'])}}">
 
-                                    <img src="/images/{{$product->images[$key]['img']}}" alt="" width="240">
+                                    <img src="{{asset('storage/images/'.$product['id'].'/'.$product->images[0]['img'])}}" alt="" width="240">
 
                                 </a>
                                 <p class="card-text">Some quick example text to build on the card title and make up the

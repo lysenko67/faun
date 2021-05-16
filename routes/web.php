@@ -25,7 +25,7 @@ Route::group(['namespace' => '\App\Http\Controllers\Shop'], function() {
     Route::get('/', 'HomeController@index');
     Route::resource('cart', 'CartController');
     Route::get('/{category}', 'CategoryController@index')->name('category.index');
-    Route::get('/{category}/{product_id}', 'ProductController@index')->name('product.index');
+    Route::get('/{category}/{slug}', 'ProductController@index')->name('product.index');
 });
 
 

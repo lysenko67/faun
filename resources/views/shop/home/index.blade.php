@@ -30,19 +30,14 @@
                 </div>
             </div>
             <div class="row">
-                @foreach($products as $product)
+                @foreach($products as $key => $product)
                     <div class="card" style="width: 18rem; margin: 20px">
                         <div class="card-body">
-                            <h5 class="card-title">{{$product->category['title']}}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Подзаголовок карты</h6>
-                            <a href="{{route('category.index', $product->category['slug'])}}">
+                            <a href="{{route('product.index', [$product->category['slug'], 'slug' => $product->slug])}}">
 
-                                {{--<img src="/images/{{$product->images[0]['img']}}" alt="" width="240">--}}
+                                <img src="{{asset('storage/images/'.$product['id'].'/'.$product->images[0]->img)}}" alt="" width="240">
 
                             </a>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of
-                                the card's content.</p>
                             <p class="card-text">{{$product->price}} руб.</p>
                         </div>
                     </div>

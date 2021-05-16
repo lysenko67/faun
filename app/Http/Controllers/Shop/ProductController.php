@@ -15,11 +15,12 @@ class ProductController extends Controller
         'description'
     ];
 
-    public function index($category, $product_id)
+    public function index($category, $slug)
     {
-        $product = Product::select($this->fields)->find($product_id);
+        $product = Product::select($this->fields)->where('slug', $slug)->get()[0];
+        $product['images'] = $product->images()->where('product_id', $product->id)->get();
 
-        $product['images'] = $product->images()->where('product_id', $product_id)->get();
+//        dd($product);
 
         return view('shop.product.index', compact('category', 'product'));
     }
