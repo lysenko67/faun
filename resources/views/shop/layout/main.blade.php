@@ -8,12 +8,13 @@
     <meta id="token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href={{asset('assets/shop/carousel.css')}}>
+    <link rel="stylesheet" href={{asset('assets/shop/my-css/carousel.css')}}>
+    <link rel="stylesheet" href={{asset('assets/shop/my-css/shop.css')}}>
     <title>@yield('title')</title>
 </head>
 <body>
 
-<header>
+<header class="fixed-top" style="background: white">
     <div class="container">
         <div class="row">
             <div class="col-2">
@@ -54,7 +55,7 @@
         <div class="row">
             <ul class="nav-header">
                 <li class="n-item">
-                    <a class="n-link" href="">О нас</a>
+                    <a class="n-link" href="/">Главная</a>
                 </li>
                 <li class="n-item">
                     <a class="n-link" href="">Оплата</a>
@@ -70,7 +71,7 @@
     </div>
 </header>
 
-<div class="container" style="margin-top: 30px">
+<div class="container" style="margin-top: 130px">
 
     @yield('content')
 
@@ -79,7 +80,6 @@
 <footer>
 
 </footer>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
         integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
@@ -91,6 +91,7 @@
     })
 </script>
 
+<script src="{{asset('assets/shop/my-js/add_product_to_basket.js')}}"></script>
 @yield('custom_js')
 
 </body>

@@ -25,6 +25,13 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
         </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="btn" href="{{route('logout')}}">
+                    Выход
+                </a>
+            </li>
+        </ul>
 
     </nav>
     <!-- /.navbar -->
@@ -43,12 +50,13 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                         with font-awesome or any other icon font library -->
+
                     <li class="nav-item">
-                        <a href="{{route('admin.index')}}" class="nav-link">
+                        <a href="{{route('orders.index')}}" class="nav-link">
                             <i class="fas nav-icon fa-home"></i>
-                            <p>Главная</p>
+                            <p>
+                                Заказы
+                            </p>
                         </a>
                     </li>
 

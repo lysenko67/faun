@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProduct extends FormRequest
+class StoreClientPost extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreProduct extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,17 +24,18 @@ class StoreProduct extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'description' => 'required',
-            'content' => 'required',
-            'category_id' => 'required|integer',
-
+            'name' => ['required', 'max:100'],
+            'email' => 'required|email',
+            'phone' => 'required',
         ];
     }
+
     public function messages()
     {
         return [
-
+            'name.required' => 'Введите ваше имя',
+            'name.max' => 'Максимальное колличество символов 100',
+            'phone.required' => 'Введите ваш телефон'
         ];
     }
 }

@@ -41,7 +41,7 @@ class CartController extends Controller
     {
         $data = $request->json()->all();
         $product = Product::find($data['id']);
-        $images = $product->images()->where('product_id', 1)->get()->all();
+        $images = $product->images()->where('product_id', $data['id'])->get()->all();
         $img = array_shift($images);
         $product['img'] = $img->img;
         if(empty($product)) return false;
@@ -50,9 +50,15 @@ class CartController extends Controller
         $cart = new Cart();
         $cart->addToCart($request, $product, $qty);
 
-        $qty = $request->session()->get('result.qty');
+        $result = session()->get('result');
+        $product = session()->get('cart.'.$data['id']);
 
-        return response()->json($qty, JsonResponse::HTTP_OK);
+        return response()->json([
+            'result' => $result['sum'],
+            'qty' => $result['qty'],
+            'qty_product' => $product['qty_product'],
+            'price' => $product['price']
+        ], JsonResponse::HTTP_OK);
     }
 
     /**
@@ -84,8 +90,32 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        //
+        $price = Product::find($id)->price;
+
+        $result = session()->get('result');
+        $result['qty'] = $result['qty'] - 1;
+        $result['sum'] = $result['sum'] - $price;
+        $request->session()->put('result', $result);
+        $result = session()->get('result');
+
+        $prod = session()->get("cart.$id");
+
+        $prod['qty_product'] = $prod['qty_product'] - 1;
+        $prod['price'] = $prod['price'] - $price;
+        $request->session()->put("cart.$id", $prod);
+        $prod = session()->get("cart.$id");
+
+        if($prod['qty_product'] < 1) {
+            $request->session()->forget("cart.$id");
+        }
+
+        return response()->json([
+            'result' => $result['sum'],
+            'qty' => $result['qty'],
+            'qty_product' => $prod['qty_product'],
+            'price' => $prod['price']
+        ], JsonResponse::HTTP_OK);
     }
 }
