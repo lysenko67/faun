@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductClientsTable extends Migration
+class CreateProductOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateProductClientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_clients', function (Blueprint $table) {
+        Schema::create('product_orders', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('client_id')->unsigned();
-            $table->foreign('client_id')
+            $table->bigInteger('order_id')->unsigned();
+            $table->foreign('order_id')
                 ->references('id')
-                ->on('clients')
+                ->on('orders')
                 ->onDelete('cascade');
             $table->string('title');
             $table->string('vendor_code');
@@ -35,6 +35,6 @@ class CreateProductClientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_clients');
+        Schema::dropIfExists('product_orders');
     }
 }

@@ -1,35 +1,81 @@
 <?php
 
-
 namespace App\Services\AddOrders;
 
 
+use App\Models\ProductOrders;
+use Illuminate\Support\Facades\DB;
+
 class AddOrders
 {
+    protected $post;
+    protected $order;
+    protected $arrQty = [];
+    protected $arrTitle = [];
+    protected $arrId = [];
 
-    public static function add($post, $client, $model) {
+    public function __construct($post, $order)
+    {
+        $this->post = $post;
+        $this->order = $order;
+    }
 
-        foreach($post as $qty => $item) {
-            if(preg_match('/qty_.+/',  $qty)) {
-                $arrQty[str_ireplace('qty_', '', $qty)] = $item;
-            } else if(preg_match('/title_.+/',  $qty)) {
-                $arrTitle[str_ireplace('title_', '', $qty)] = $item;
-            }
-        }
+    public function create()
+    {
+        $product_order = new ProductOrders();
 
-        foreach ($post as $key => $item) {
-            if(preg_match('/id_.+/',  $key)) {
+        $this->str_post();
+
+        foreach ($this->post as $key => $item) {
+
+            if (preg_match('/id_.+/', $key)) {
                 $key = str_replace('id_', '', $key);
 
-                $model->create([
-                    'client_id' => $client->id,
+                $product_order->create([
+                    'order_id' => $this->order->id,
                     'vendor_code' => $key,
-                    'qty' => $arrQty[$key],
+                    'qty' => $this->arrQty[$key],
                     'sum' => $item,
-                    'title' => $arrTitle[$key]
+                    'title' => $this->arrTitle[$key]
                 ]);
+
             }
         }
     }
+
+    public function update()
+    {
+        $this->str_post();
+
+        foreach ($this->post as $key => $item) {
+
+            if (preg_match('/id_.+/', $key)) {
+                $key = str_replace('id_', '', $key);
+
+
+                DB::table('product_orders')
+                    ->where('id', $this->arrId[$key])
+                    ->update([
+                        'sum' => $item,
+                        'qty' => $this->arrQty[$key],
+                    ]);
+
+            }
+        }
+    }
+
+    protected function str_post()
+    {
+        foreach ($this->post as $i => $item) {
+            if (preg_match('/qty_.+/', $i)) {
+                $this->arrQty[str_ireplace('qty_', '', $i)] = $item;
+            } else if (preg_match('/title_.+/', $i)) {
+                $this->arrTitle[str_ireplace('title_', '', $i)] = $item;
+            } else if (preg_match('/id:.+/', $i)) {
+                $this->arrId[str_ireplace('id:', '', $i)] = $item;
+            }
+        }
+    }
+
 
 }

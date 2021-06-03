@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Order extends Model
 {
 
     protected $fillable = [
@@ -15,8 +15,8 @@ class Client extends Model
         'text'
     ];
 
-    public function product() {
-        return $this->hasMany(ProductClients::class);
+    public function products() {
+        return $this->hasMany(ProductOrders::class);
     }
 
 }

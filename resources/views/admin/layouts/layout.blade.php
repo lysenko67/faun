@@ -107,6 +107,14 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('edit-contacts')}}" class="nav-link">
+                            <i class="fas nav-icon fa-envelope"></i>
+                            <p>
+                                Контакты
+                            </p>
+                        </a>
+                    </li>
 
                 </ul>
             </nav>

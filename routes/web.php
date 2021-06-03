@@ -18,16 +18,18 @@ Route::group(['namespace' => '\App\Http\Controllers'], function() {
 });
 
 Route::get('logout', '\App\Http\Controllers\UserController@logout')->name('logout')->middleware('auth');
+Route::resource('admin/orders', '\App\Http\Controllers\Admin\OrderController' );
 
 Route::group(['prefix' => 'admin', 'namespace' => '\App\Http\Controllers\Admin', 'middleware' => 'admin'], function() {
-    Route::resource('/orders', 'OrderController' );
     Route::resource('/categories', 'CategoryController');
     Route::resource('/products', 'ProductController');
+    Route::get('/edit-contacts', 'ContactController@index')->name('edit-contacts');
     Route::resource('products/files', 'FileController');
 });
 
 Route::group(['namespace' => '\App\Http\Controllers\Shop'], function() {
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/contacts', 'ContactController@index')->name('contacts.index');
     Route::resource('cart', 'CartController');
     Route::get('/{category}', 'CategoryController@index')->name('category.index');
     Route::get('/{category}/{slug}', 'ProductController@index')->name('product.index');

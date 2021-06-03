@@ -9,24 +9,8 @@
 
         <div class="col-10">
 
-            <div class="row">
-                <div class="col-auto me-auto">
-                    <a href="javascript:history.back(1)">
-                        <svg class="back-svg" id="Layer" enable-background="new 0 0 64 64" fill="#949494FF" height="30"
-                             viewBox="0 0 64 64" width="30" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="m54 30h-39.899l15.278-14.552c.8-.762.831-2.028.069-2.828-.761-.799-2.027-.831-2.828-.069l-17.448 16.62c-.755.756-1.172 1.76-1.172 2.829 0 1.068.417 2.073 1.207 2.862l17.414 16.586c.387.369.883.552 1.379.552.528 0 1.056-.208 1.449-.621.762-.8.731-2.065-.069-2.827l-15.342-14.552h39.962c1.104 0 2-.896 2-2s-.896-2-2-2z"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class="col-auto">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Корзина</li>
-                    </ol>
-                </div>
-            </div>
-            <hr id="basket">
+            @include('shop.layout.breadcrumbs')
+
             @if(!empty($cart))
                 <form method="post" id="order" name="order">
                     @csrf
@@ -98,13 +82,32 @@
                         </div>
                         <div class="col-lg-6">
                             <p class="fs-5">Доставка и оплата</p>
+                            <div class="mb-3">
+                                <label for="сity" class="form-label">Город</label>
+                                <input type="text" class="form-control" name="сity" id="city">
+                            </div>
+                            <div class="mb-3">
+                                <label for="street" class="form-label">Улица</label>
+                                <input type="text" class="form-control" name="street" id="street">
+                            </div>
+                            <div class="mb-3">
+                                <label for="house" class="form-label">Дом</label>
+                                <input type="text" class="form-control" name="house" id="house">
+                            </div>
+                            <div class="mb-3">
+                                <label for="index" class="form-label">Индекс</label>
+                                <input type="text" class="form-control" name="index" id="index">
+                            </div>
+                            <div class="mb-3">
+                                <label for="index" class="form-label">Адрес пунккта выдачи</label>
+                                <input type="text" class="form-control" name="index" id="index">
+                            </div>
                         </div>
                     </div>
                     <button type="submit" id="buy" class="btn btn-success">Купить</button>
                 </form>
 
             @else
-                <h3>Моя корзина</h3>
                 <h5>Ваша корзина пуста :(</h5>
             @endif
         </div>
@@ -115,7 +118,6 @@
             e.preventDefault();
 
             const forms = document.forms.order.elements
-
 
             fetch('admin/orders', {
                 method: "POST",
@@ -134,6 +136,6 @@
             }
             return formData
         }
-    </script>
 
+    </script>
 @endsection
