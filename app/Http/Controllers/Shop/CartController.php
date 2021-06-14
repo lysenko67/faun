@@ -22,16 +22,6 @@ class CartController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -62,17 +52,6 @@ class CartController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -80,17 +59,6 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id, Request $request)
     {
         $price = Product::find($id)->price;
 
@@ -116,6 +84,30 @@ class CartController extends Controller
             'qty' => $result['qty'],
             'qty_product' => $prod['qty_product'],
             'price' => $prod['price']
+        ], JsonResponse::HTTP_OK);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function customDestroy($id, $qty, $sum)
+    {
+        $result = session()->get('result');
+
+        $result['qty'] = $result['qty'] - $qty;
+        $result['sum'] = $result['sum'] - $sum;
+        session()->put('result', $result);
+        $result = session()->get('result');
+
+        session()->forget("cart.$id");
+        $cart = session()->get('cart');
+
+        return response()->json([
+            'cart' => $cart,
+            'result' => $result
         ], JsonResponse::HTTP_OK);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCategory;
+use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -36,7 +36,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategory $request)
+    public function store(StoreCategoryRequest $request)
     {
         Category::create($request->all());
 //        $request->session()->flesh('success', 'Категория добавленна');
@@ -63,7 +63,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCategory $request, $id)
+    public function update(StoreCategoryRequest $request, $id)
     {
         $category = Category::find($id);
         $category->update($request->all());

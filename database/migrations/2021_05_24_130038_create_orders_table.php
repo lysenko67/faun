@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('country')->nullable();
             $table->string('address')->nullable();
             $table->string('index')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->default('accepted');
             $table->string('note')->nullable();
             $table->timestamps();
         });

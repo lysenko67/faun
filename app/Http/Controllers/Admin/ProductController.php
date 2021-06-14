@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategory;
-use App\Http\Requests\StoreProduct;
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -45,7 +45,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProduct $request)
+    public function store(StoreProductRequest $request)
     {
         $data = $request->all();
 //        dd($data);
@@ -82,7 +82,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProduct $request, $id)
+    public function update(StoreProductRequest $request, $id)
     {
         $product = Product::find($id);
         $data = $request->all();

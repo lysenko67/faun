@@ -52,7 +52,6 @@ class AddOrders
             if (preg_match('/id_.+/', $key)) {
                 $key = str_replace('id_', '', $key);
 
-
                 DB::table('product_orders')
                     ->where('id', $this->arrId[$key])
                     ->update([

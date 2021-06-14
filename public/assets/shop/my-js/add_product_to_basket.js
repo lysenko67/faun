@@ -6,6 +6,7 @@ const qtyProduct = document.querySelectorAll('.qty-product')
 const priceProduct = document.querySelectorAll('.price-product')
 const priceSum = document.querySelector('.price-sum')
 const csrf = document.getElementById('token').getAttribute('content')
+const deleteProduct = document.querySelectorAll('.delete-product')
 
 addToCart.forEach(elem => {
     elem.addEventListener('click', function (e) {
@@ -20,9 +21,44 @@ addToCart.forEach(elem => {
 delQty.forEach(elem => {
     elem.addEventListener('click', function (e) {
         let id = e.target.getAttribute('data-id')
-        postCart(id, qty, qtyProduct, priceSum, myModal, modalShow=null, url='/cart/'+id, method='DELETE', csrf)
+        postCart(id, qty, qtyProduct, priceSum, myModal, modalShow=null, url='/cart/'+id, method='PUT', csrf)
     })
 })
+
+deleteProduct.forEach(elem => {
+    elem.addEventListener('click', function(e) {
+        const id = e.target.getAttribute('data-id')
+        const collection = e.target.parentNode.parentNode.parentNode
+        let text = []
+        for(let node of collection.childNodes) {
+            for(let child of node.childNodes) {
+                if(child.textContent.match(/[0-9]/)) {
+                    text.push(child.textContent)
+                }
+            }
+        }
+        fetch('/cart/'+id+'/'+text[1]+'/'+text[2], {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': csrf
+            },
+        })
+            .then(response => response.json())
+            .then(res => {
+                console.log(res.result['qty'], res.result['sum'])
+                qty.textContent = res.result['qty']
+                priceSum.textContent = res.result['sum']
+
+                elem.parentNode.parentNode.parentNode.remove()
+                if(res.cart.length < 1) {
+                        document.getElementById('order').remove()
+                        basket.insertAdjacentHTML('afterend', '<h5>Ваша корзина пуста :(</h5>')
+                    }
+                })
+    })
+})
+
+
 
 function postCart(id, qty, qtyProduct, priceSum, myModal, modalShow, url, method, csrf) {
     if (id) {
@@ -43,7 +79,7 @@ function postCart(id, qty, qtyProduct, priceSum, myModal, modalShow, url, method
                         if(res.qty_product < 1) {
                             if(res.qty == 0) {
                                 document.getElementById('order').remove()
-                                basket.insertAdjacentHTML('afterend', '<h3>Моя корзина</h3><h5>Ваша корзина пуста :(</h5>')
+                                basket.insertAdjacentHTML('afterend', '<h5>Ваша корзина пуста :(</h5>')
                                 return
                             }
                             elem.parentNode.parentNode.remove()

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreClientPost extends FormRequest
+class StoreOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,9 +13,8 @@ class StoreClientPost extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -33,9 +32,11 @@ class StoreClientPost extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Введите ваше имя',
-            'name.max' => 'Максимальное колличество символов 100',
-            'phone.required' => 'Введите ваш телефон'
+            'name.required' => 'Заполните имя и Фамилию',
+            'email.required' => 'Заполните email',
+            'email.email' => 'Email не коректен',
+            'phone.required' => 'Введите телефон'
         ];
     }
 }
+

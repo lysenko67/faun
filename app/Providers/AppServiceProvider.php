@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\Contact;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -27,9 +28,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         if (app()->runningInConsole() === false) {
+
             $categories = Category::orderBy('id')->get();
 
-            View::share(compact('categories'));
+            $contact = Contact::all()[0];
+
+            View::share(compact('categories', 'contact'));
 
             Paginator::useBootstrap();
         }

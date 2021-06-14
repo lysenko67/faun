@@ -15,5 +15,5 @@
         </ol>
     </div>
 </div>
-<h3>@yield('title')</h3>
+<h3 class="bronze">@yield('title')</h3>
 <hr id="basket">

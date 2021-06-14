@@ -78,7 +78,16 @@
 </div>
 
 <footer>
-
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <span class="contact">Телефон: &nbsp;&nbsp;{{$contact->phone}}</span>
+                <span class="contact">Email: &nbsp;&nbsp;{{$contact->email}}</span>
+                <span class="contact">Время работы: &nbsp;&nbsp;{{$contact->working_hours}}</span>
+            </div>
+        </div>
+    </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"

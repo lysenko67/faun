@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreOrderPost;
+use App\Http\Requests\StoreOrderRequest;
 use App\Mail\OrderAccepted;
 use App\Models\Order;
 use App\Models\ProductOrders;
@@ -20,45 +20,28 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $get = $request->all();
+        if (!empty($get['sort-status']) && $get['sort-status'] != 'all') {
+            $get = $get['sort-status'];
+            $orders = Order::where('status', $get)
+                ->latest()
+                ->paginate(10);
+
+            return view('admin.orders.index', compact('orders', 'get'));
+        }
+
         $orders = Order::with('products')
             ->latest()
             ->paginate(10);
-
-
         return view('admin.orders.index', compact('orders'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $post = $request->all();
-
-        DB::transaction(function() use($post, $request) {
-
-            $order = Order::create($post);
-
-            $add_orders = new AddOrders($post, $order);
-
-            $add_orders->create();
-
-            Mail::to($post['email'])->send(new OrderAccepted($order->id));
-
-        });
-
-        return response()->json($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -69,7 +52,7 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -82,8 +65,8 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -91,9 +74,15 @@ class OrderController extends Controller
 
         $post = $request->all();
 
-        $transaction = DB::transaction(function() use($post, $id) {
+        $transaction = DB::transaction(function () use ($post, $id) {
 
             $order = Order::find($id);
+
+            if (isset($post['status'])) {
+                $order->status = $post['status'];
+                $order->save();
+                return true;
+            }
 
             $add_orders = new AddOrders($post, $order);
 
@@ -102,7 +91,7 @@ class OrderController extends Controller
         });
 
 
-        if($transaction) {
+        if ($transaction) {
             return redirect()->route('orders.index')->with('success', 'Изменения приняты');
         }
 
@@ -111,7 +100,7 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

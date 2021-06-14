@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //Route::resource('cart', \App\Http\Controllers\CartController::class);
+
+//Route::post('orders', '\App\Http\Controllers\Shop\OrderController@store' )->name('orders');
