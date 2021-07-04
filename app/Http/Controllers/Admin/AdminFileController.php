@@ -8,7 +8,7 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class FileController extends Controller
+class AdminFileController extends Controller
 {
     /**
      * Display a listing of the resource.

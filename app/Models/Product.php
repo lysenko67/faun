@@ -26,7 +26,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id' );
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     /**
@@ -42,11 +42,4 @@ class Product extends Model
             ]
         ];
     }
-
-//    public function getImage() {
-//        if(!$this->img) {
-//            return asset("images/no-image.png");
-//        }
-//        return asset("images/{$this->img}");
-//    }
 }

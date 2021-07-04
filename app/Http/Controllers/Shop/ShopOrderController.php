@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-class OrderController extends Controller
+class ShopOrderController extends Controller
 {
     /**
      * Store a newly created resource in storage.

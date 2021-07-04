@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
-class OrderController extends Controller
+class AdminOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
