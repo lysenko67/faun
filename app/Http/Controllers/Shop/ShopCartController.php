@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Shop;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Repositories\CartRepository;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -27,18 +29,14 @@ class ShopCartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return false
      */
-    public function store(Request $request)
+    public function store(Request $request, ProductRepository $productRepository)
     {
         $data = $request->json()->all();
-        $product = Product::find($data['id']);
-        $images = $product->images()->where('product_id', $data['id'])->get()->all();
-        $img = array_shift($images);
-        $product['img'] = $img->img;
-        if(empty($product)) return false;
+        $product = $productRepository->getCartProduct($data['id']);
 
         $qty = 1;
-        $cart = new Cart();
-        $cart->addToCart($request, $product, $qty);
+        $cart = new CartRepository();
+        $cart->addToCart($product, $qty);
 
         $result = session()->get('result');
         $product = session()->get('cart.'.$data['id']);
