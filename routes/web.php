@@ -19,7 +19,6 @@ Route::group(['namespace' => '\App\Http\Controllers'], function() {
 
 Route::get('logout', '\App\Http\Controllers\UserController@logout')->name('logout')->middleware('auth');
 
-
 Route::group(['prefix' => 'admin', 'namespace' => '\App\Http\Controllers\Admin', 'middleware' => 'admin'], function() {
     Route::resource('orders', 'AdminOrderController' );
     Route::resource('categories', 'AdminCategoryController');

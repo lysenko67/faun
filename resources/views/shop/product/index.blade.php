@@ -90,8 +90,7 @@
                 </div>
                 <div class="modal__body">
                     <h5 class="modal-title text-center">Товар добавлен в корзину</h5>
-                    <p class="text-center">
-                        Всего в вашей корзине товаров 3<br>
+                    <p class="text-center">Всего в вашей корзине товаров<br>
                         на сумму  <span class="price-sum price-table"></span> руб.
                     </p>
                     <div class="row">

@@ -14,10 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
-//Route::resource('cart', \App\Http\Controllers\CartController::class);
-
-//Route::post('orders', '\App\Http\Controllers\Shop\OrderController@store' )->name('orders');
+//Route::group(['prefix' => 'admin', 'namespace' => '\App\Http\Controllers\Admin', 'middleware' => 'admin'], function() {
+//    Route::resource('orders', 'AdminOrderController' );
+//    Route::resource('categories', 'AdminCategoryController');
+//    Route::resource('products', 'AdminProductController');
+//    Route::get('edit-contacts', 'AdminContactController@index')->name('edit-contacts');
+//    Route::resource('products/files', 'AdminFileController');
+//});

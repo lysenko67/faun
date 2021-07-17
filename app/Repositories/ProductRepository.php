@@ -37,15 +37,23 @@ class ProductRepository
      * @param $id
      * @return array product
      */
-    public function getProduct($id)
+    public function getCartProduct($id)
     {
         $product = $this->product()
-            ->select($this->columns)
+            ->select([
+                'id',
+                'title',
+                'price',
+                'slug',
+                'category_id',
+            ])
             ->with([
                 'category:id,title,slug',
                 'images:product_id,img'
             ])
             ->find($id)->toArray();
+
+        $product['images'] = array_shift($product['images'])['img'];
 
         return $product;
     }
