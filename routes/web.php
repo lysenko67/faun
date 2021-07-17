@@ -1,17 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminCategoryController;
-use App\Http\Controllers\Admin\AdminContactController;
-use App\Http\Controllers\Admin\AdminFileController;
-use App\Http\Controllers\Admin\AdminOrderController;
-use App\Http\Controllers\Admin\AdminProductController;
-use App\Http\Controllers\Shop\ShopCartController;
-use App\Http\Controllers\Shop\ShopCategoryController;
-use App\Http\Controllers\Shop\ShopContactController;
-use App\Http\Controllers\Shop\ShopHomeController;
-use App\Http\Controllers\Shop\ShopOrderController;
-use App\Http\Controllers\Shop\ShopProductController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
