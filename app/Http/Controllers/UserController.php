@@ -24,7 +24,6 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ])) {
-//            session()->flash('success', 'Вы авторизоованны');
             if(Auth::user()->is_admin) {
                 return redirect()->route('orders.index');
             }

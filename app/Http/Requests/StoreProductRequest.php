@@ -24,11 +24,10 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
+            'author' => 'required',
             'title' => 'required',
             'description' => 'required',
-            'content' => 'required',
             'category_id' => 'required|integer',
-
         ];
     }
     public function messages()

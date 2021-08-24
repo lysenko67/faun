@@ -19,6 +19,8 @@
                         <img class="img-fluid" src="{{asset('pun.png')}}" style="height: auto; max-width: 100%;" alt="">
                     </div>
                 </div>
+
     @include('shop.layout.content')
+
 @endsection
 

@@ -31,7 +31,6 @@
 
     input.addEventListener('change', function (e) {
         num.i = num.i + 1
-        console.log(num.i)
         const img = input.files[0]
         formData.append('files[' + num.i + ']', img)
         handleFiles(img)

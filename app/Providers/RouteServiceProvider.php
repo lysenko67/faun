@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Annexe\Ship\Core\Loaders\RoutesLoader;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -38,14 +39,31 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
+//            Route::prefix('api')
+//                ->middleware('api')
+//                ->namespace($this->namespace)
+//                ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
+
+
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(function() {
+                    RoutesLoader::getRoutsWeb();
+                });
+
+            Route::prefix('api')
+                ->middleware('api')
+                ->namespace($this->namespace)
+                ->group(function() {
+//                    Route::middleware(['auth:sanctum'])->group(function() {
+                        RoutesLoader::getRoutsApi();
+//                    });
+                });
+
         });
     }
 
