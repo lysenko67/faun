@@ -32,7 +32,7 @@ Route::post('login', LoginController::class.'@authenticate');
 
 Route::group(['namespace' => '\App\Http\Controllers\Shop'], function() {
 //    Route::get('/', 'ShopHomeController@index')->name('home');
-    Route::post('orders', 'ShopOrderController@store')->name('orders');
+//    Route::post('orders', 'ShopOrderController@store')->name('orders');
     Route::get('contacts', 'ShopContactController@index')->name('contacts.index');
     Route::delete('cart/{id}/{qty}/{sum}', 'ShopCartController@customDestroy');
     Route::resource('cart', 'ShopCartController');

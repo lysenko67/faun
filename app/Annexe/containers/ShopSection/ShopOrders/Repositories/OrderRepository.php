@@ -18,10 +18,14 @@ class OrderRepository extends CoreRepository
         'email',
         'text',
         'phone',
+        'country',
+        'address',
+        'index',
+        'status',
         'created_at'
     ];
 
-    public function getAllOrders()
+    public function getAllOrders($count)
     {
         $orders = $this
             ->startConditions()
@@ -30,8 +34,53 @@ class OrderRepository extends CoreRepository
                 'products:id,order_id,title,vendor_code,qty,sum',
             ])
             ->latest()
-            ->paginate(10);
+            ->paginate($count);
 
         return $orders;
+    }
+
+    public function getAllOrdersOnlyStatus($status, $count)
+    {
+        $orders = $this
+            ->startConditions()
+            ->select($this->columns)
+            ->with([
+                'products:id,order_id,title,vendor_code,qty,sum',
+            ])
+            ->where('status', $status)
+            ->latest()
+            ->paginate($count);
+
+        return $orders;
+    }
+
+    public function getOneOrder($id)
+    {
+        $order = $this
+            ->startConditions()
+            ->select($this->columns)
+            ->where('id', $id)
+            ->with([
+                'products:id,order_id,title,vendor_code,qty,sum',
+            ])
+            ->first();
+
+        return $order;
+    }
+
+    public function updateOrder($data, $id)
+    {
+        return $this
+            ->startConditions()
+            ->find($id)
+            ->update($data);
+    }
+
+    public function deleteOrder($id)
+    {
+        $this
+            ->startConditions()
+            ->find($id)
+            ->delete();
     }
 }

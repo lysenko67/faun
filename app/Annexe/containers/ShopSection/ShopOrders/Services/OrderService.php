@@ -19,9 +19,24 @@ class OrderService
         $this->orderRepository = $orderRepository;
     }
 
-    public function getAllOrders()
+    /**
+     * @param $count
+     * @return mixed
+     */
+    public function getAllOrders($count)
     {
-        return $this->orderRepository->getAllOrders();
+        return $this->orderRepository->getAllOrders($count);
+    }
+
+    /**
+     * @param $id
+     * @param $post
+     */
+    public function updateOrder($id, $post)
+    {
+        $order = $this->orderRepository->getOneOrder($id);
+        $order->status = $post;
+        $order->save();
     }
 
 }

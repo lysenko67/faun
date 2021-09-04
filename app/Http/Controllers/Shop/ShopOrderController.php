@@ -22,11 +22,12 @@ class ShopOrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
+
 //        $validated = $request->validate([
 //            'phone' => 'required',
 //        ]);
 
-        return;
+//        return;
 
         $post = $request->all();
 
@@ -38,10 +39,10 @@ class ShopOrderController extends Controller
 
             $add_orders->create();
 
-            Mail::to($post['email'])->send(new OrderAccepted($order->id));
+//            Mail::to($post['email'])->send(new OrderAccepted($order->id));
 
         });
 
-//        return response()->json($request->all());
+        return response()->json($request->all());
     }
 }

@@ -13,7 +13,7 @@ class ShopHomeController extends ControllerCore
 
     public function index( ProductRepository $productRepository )
     {
-        $products = $productRepository->getAllProducts();
+        $products = $productRepository->getAllProducts(10);
 
         return view('shop.home.index', compact('products'));
     }

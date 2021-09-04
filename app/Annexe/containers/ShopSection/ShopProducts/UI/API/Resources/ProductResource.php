@@ -2,7 +2,6 @@
 
 namespace App\Annexe\containers\ShopSection\ShopProducts\UI\API\Resources;
 
-use App\Annexe\containers\ShopSection\ShopCategories\Repositories\ShopCategoryRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
 

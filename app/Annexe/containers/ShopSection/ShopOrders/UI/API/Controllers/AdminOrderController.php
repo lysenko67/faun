@@ -4,24 +4,25 @@ namespace App\Annexe\containers\ShopSection\ShopOrders\UI\API\Controllers;
 
 use App\Annexe\containers\ShopSection\ShopOrders\Models\Order;
 use App\Annexe\containers\ShopSection\ShopOrders\Repositories\OrderRepository;
+use App\Annexe\containers\ShopSection\ShopOrders\Services\OrderService;
+use App\Annexe\containers\ShopSection\ShopOrders\Services\ProductOrderService;
+use App\Annexe\containers\ShopSection\ShopOrders\UI\API\Resources\OrderResource;
 use App\Annexe\Ship\Core\Abstracts\Controllers\ApiControllerCore;
-use App\Http\Requests\StoreOrderRequest;
-use App\Mail\OrderAccepted;
-
-use App\Services\AddOrders\AddOrders;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 class AdminOrderController extends ApiControllerCore
 {
 
+    protected $orderRepository;
     protected $orderServices;
+    private $productOrderService;
 
-    public function __construct(OrderRepository $orderRepository)
+    public function __construct(OrderRepository $orderRepository, OrderService $orderService, ProductOrderService $productOrderService)
     {
-        $this->orderServices = $orderRepository;
+        $this->orderRepository = $orderRepository;
+        $this->orderServices = $orderService;
+        $this->productOrderService = $productOrderService;
     }
 
     /**
@@ -31,19 +32,25 @@ class AdminOrderController extends ApiControllerCore
      */
     public function index(Request $request)
     {
-//        $get = $request->all();
-//        if (!empty($get['sort-status']) && $get['sort-status'] != 'all') {
-//            $get = $get['sort-status'];
-//            $orders = Order::where('status', $get)
-//                ->latest()
-//                ->paginate(10);
-//
-//            return response()->json($orders);
-//        }
+        $request = $request->only('count', 'status');
 
-        $orders = $this->orderServices->getAllOrders();
+        if (!empty($request['status']) && $request['status'] != 'all') {
 
-        return response()->json($orders);
+            $orders = $this->orderRepository->getAllOrdersOnlyStatus($request['status'], $request['count']);
+
+        } else {
+
+            $orders = $this->orderServices->getAllOrders($request['count']);
+
+        }
+
+        return response()->json([
+            'orders' => OrderResource::collection($orders),
+            'paginate' => [
+                'total' => $orders->total(),
+                'currentPage' => $orders->currentPage()
+            ]
+        ]);
     }
 
     /**
@@ -54,7 +61,9 @@ class AdminOrderController extends ApiControllerCore
      */
     public function show($id)
     {
-        //
+        $order = $this->orderRepository->getOneOrder($id);
+
+        return response()->json(new OrderResource($order), JsonResponse::HTTP_OK);
     }
 
     /**
@@ -66,30 +75,26 @@ class AdminOrderController extends ApiControllerCore
      */
     public function update(Request $request, $id)
     {
+//        $data = $request->all();
+//        return response()->json($data['products']);
 
-        $post = $request->all();
+        if($request->get('count')) {
+            $post = $request->get('status');
 
-        $transaction = DB::transaction(function () use ($post, $id) {
+            $this->orderServices->updateOrder($id, $post);
 
-            $order = Order::find($id);
+            $orders = $this->orderServices->getAllOrders($request['count']);
 
-            if (isset($post['status'])) {
-                $order->status = $post['status'];
-                $order->save();
-                return true;
-            }
-
-            $add_orders = new AddOrders($post, $order);
-
-            $add_orders->update();
-            return true;
-        });
-
-
-        if ($transaction) {
-            return response()->json('');
+            return response()->json([
+                'orders' => OrderResource::collection($orders),
+                'paginate' => [
+                    'total' => $orders->total(),
+                    'currentPage' => $orders->currentPage()
+                ]
+            ]);
+        } else {
+            $this->productOrderService->updateProductsOrder($request->all(), $id);
         }
-
     }
 
     /**
@@ -100,9 +105,7 @@ class AdminOrderController extends ApiControllerCore
      */
     public function destroy($id)
     {
-        $order = Order::find($id);
-
-        $order->delete();
+        $this->orderRepository->deleteOrder($id);
     }
 }
 

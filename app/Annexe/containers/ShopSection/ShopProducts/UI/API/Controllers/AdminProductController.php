@@ -9,6 +9,7 @@ use App\Annexe\containers\ShopSection\ShopProducts\UI\API\Resources\ProductResou
 use App\Annexe\Ship\Core\Abstracts\Controllers\ApiControllerCore;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 
 class AdminProductController extends ApiControllerCore
@@ -18,30 +19,41 @@ class AdminProductController extends ApiControllerCore
      */
     public $productRepository;
     public $productService;
+
     /**
      * @param ProductRepository $productRepository
      */
-    public function __construct(ProductRepository $productRepository, ProductService $productService) {
+    public function __construct(ProductRepository $productRepository, ProductService $productService)
+    {
         $this->productService = $productService;
         $this->productRepository = $productRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $products = $this->productRepository->getAllProducts();
+        $count = $request->get('count');
 
-        return response()->json(ProductResource::collection($products), JsonResponse::HTTP_OK);
+        $products = $this->productRepository->getAllProducts($count);
+
+        return response()->json([
+            'products' => ProductResource::collection($products),
+            'paginate' => [
+                'total' => $products->total(),
+                'currentPage' => $products->currentPage()
+            ]
+
+        ], JsonResponse::HTTP_OK);
     }
-
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
@@ -65,8 +77,8 @@ class AdminProductController extends ApiControllerCore
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(ProductRequest $request, $id)
@@ -77,7 +89,7 @@ class AdminProductController extends ApiControllerCore
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -5,7 +5,7 @@ use App\Annexe\containers\ShopSection\ShopOrders\UI\API\Controllers\AdminOrderCo
 Route::resource('admin/orders', AdminOrderController::class)
     ->only([
         "index", "store", "show", "update", "destroy",
-    ]);;
+    ]);
 
 
 

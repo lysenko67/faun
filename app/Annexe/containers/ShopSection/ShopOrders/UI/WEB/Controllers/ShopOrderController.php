@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Annexe\containers\ShopSection\ShopOrders\UI\WEB;
+namespace App\Annexe\containers\ShopSection\ShopOrders\UI\WEB\Controllers;
 
-use App\Annexe\containers\AdminSection\AdminOrders\Models\Order;
+use App\Annexe\containers\ShopSection\ShopOrders\Models\Order;
 use App\Annexe\containers\ShopSection\ShopOrders\UI\WEB\Requests\OrderRequest;
 use App\Annexe\Ship\Core\Abstracts\Controllers\ControllerCore;
 use App\Mail\OrderAccepted;
@@ -20,12 +20,6 @@ class ShopOrderController extends ControllerCore
      */
     public function store(OrderRequest $request)
     {
-//        $validated = $request->validate([
-//            'phone' => 'required',
-//        ]);
-
-        return;
-
         $post = $request->all();
 
         DB::transaction(function () use ($post, $request) {
@@ -36,10 +30,10 @@ class ShopOrderController extends ControllerCore
 
             $add_orders->create();
 
-            Mail::to($post['email'])->send(new OrderAccepted($order->id));
+//            Mail::to($post['email'])->send(new OrderAccepted($order->id));
 
         });
 
-//        return response()->json($request->all());
+        return response()->json($request->all());
     }
 }
