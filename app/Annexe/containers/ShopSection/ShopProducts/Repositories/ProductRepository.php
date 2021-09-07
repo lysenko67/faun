@@ -12,6 +12,9 @@ use phpDocumentor\Reflection\Types\Collection;
 
 class ProductRepository extends CoreRepository
 {
+    /**
+     * @return string
+     */
     public function getModelClass(): string
     {
         return Model::class;
@@ -49,6 +52,28 @@ class ProductRepository extends CoreRepository
             ->with([
                 'category:id,title,slug',
                 'images:id,product_id,img,id'
+            ])
+            ->latest()
+            ->paginate($count);
+
+        return $products;
+    }
+
+    /**
+     * @param $category_id
+     * @param $count
+     * @return mixed
+     */
+    public function getAllOrdersOnlyCategory($category_id, $count)
+    {
+        $products = $this
+            ->startConditions()
+            ->select($this->columns)
+            ->orderBy('id', 'DESC')
+            ->where('category_id', $category_id)
+            ->with([
+                'category:id,title,slug',
+                'images:product_id,img'
             ])
             ->latest()
             ->paginate($count);

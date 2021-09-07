@@ -36,10 +36,18 @@ class AdminProductController extends ApiControllerCore
      */
     public function index(Request $request): JsonResponse
     {
-        $count = $request->get('count');
+        $request = $request->only('count', 'category');
 
-        $products = $this->productRepository->getAllProducts($count);
+        if (!empty($request['category']) && $request['category'] != 'all') {
 
+            $products = $this->productRepository->getAllOrdersOnlyCategory($request['category'], $request['count']);
+
+        } else {
+
+            $products = $this->productRepository->getAllProducts($request['count']);
+
+        }
+//dd($products);
         return response()->json([
             'products' => ProductResource::collection($products),
             'paginate' => [

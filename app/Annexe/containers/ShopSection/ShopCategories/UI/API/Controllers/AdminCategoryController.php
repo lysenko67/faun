@@ -4,6 +4,7 @@ namespace App\Annexe\containers\ShopSection\ShopCategories\UI\API\Controllers;
 
 use App\Annexe\containers\ShopSection\ShopCategories\Repositories\CategoryRepository;
 use App\Annexe\containers\ShopSection\ShopCategories\UI\API\Requests\CategoryRequest;
+use App\Annexe\containers\ShopSection\ShopCategories\UI\API\Resources\CategoryResource;
 use App\Annexe\Ship\Core\Abstracts\Controllers\ApiControllerCore;
 use Illuminate\Http\JsonResponse;
 
@@ -32,7 +33,7 @@ class AdminCategoryController extends ApiControllerCore
     {
         $categories = $this->categoryRepository->getAllCategories();
 
-        return response()->json($categories);
+        return response()->json(CategoryResource::collection($categories));
     }
 
     /**

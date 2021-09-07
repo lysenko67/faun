@@ -18,7 +18,11 @@ class AdminOrderController extends ApiControllerCore
     protected $orderServices;
     private $productOrderService;
 
-    public function __construct(OrderRepository $orderRepository, OrderService $orderService, ProductOrderService $productOrderService)
+    public function __construct(
+        OrderRepository $orderRepository,
+        OrderService $orderService,
+        ProductOrderService $productOrderService
+    )
     {
         $this->orderRepository = $orderRepository;
         $this->orderServices = $orderService;
@@ -75,9 +79,6 @@ class AdminOrderController extends ApiControllerCore
      */
     public function update(Request $request, $id)
     {
-//        $data = $request->all();
-//        return response()->json($data['products']);
-
         if($request->get('count')) {
             $post = $request->get('status');
 

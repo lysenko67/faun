@@ -7,11 +7,17 @@ use App\Annexe\Ship\Core\Abstracts\Repositories\CoreRepository;
 
 class OrderRepository extends CoreRepository
 {
+    /**
+     * @return string
+     */
     public function getModelClass(): string
     {
         return Model::class;
     }
 
+    /**
+     * @var string[]
+     */
     protected $columns = [
         'id',
         'name',
@@ -25,6 +31,10 @@ class OrderRepository extends CoreRepository
         'created_at'
     ];
 
+    /**
+     * @param $count
+     * @return mixed
+     */
     public function getAllOrders($count)
     {
         $orders = $this
@@ -39,6 +49,11 @@ class OrderRepository extends CoreRepository
         return $orders;
     }
 
+    /**
+     * @param $status
+     * @param $count
+     * @return mixed
+     */
     public function getAllOrdersOnlyStatus($status, $count)
     {
         $orders = $this
@@ -54,6 +69,10 @@ class OrderRepository extends CoreRepository
         return $orders;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getOneOrder($id)
     {
         $order = $this
@@ -68,6 +87,11 @@ class OrderRepository extends CoreRepository
         return $order;
     }
 
+    /**
+     * @param $data
+     * @param $id
+     * @return mixed
+     */
     public function updateOrder($data, $id)
     {
         return $this
@@ -76,6 +100,9 @@ class OrderRepository extends CoreRepository
             ->update($data);
     }
 
+    /**
+     * @param $id
+     */
     public function deleteOrder($id)
     {
         $this
