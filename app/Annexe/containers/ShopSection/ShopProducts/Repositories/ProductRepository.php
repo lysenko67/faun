@@ -64,7 +64,7 @@ class ProductRepository extends CoreRepository
      * @param $count
      * @return mixed
      */
-    public function getAllOrdersOnlyCategory($category_id, $count)
+    public function getAllProductsOnlyCategory($category_id, $count)
     {
         $products = $this
             ->startConditions()

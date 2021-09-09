@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Shop;
+namespace App\Annexe\containers\ShopSection\ShopOrders\UI\WEB\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Cart;
-use App\Models\Product;
-use App\Repositories\CartRepository;
-use App\Repositories\ProductRepository;
+use App\Annexe\containers\ShopSection\ShopOrders\Repositories\CartRepository;
+use App\Annexe\containers\ShopSection\ShopProducts\Models\Product;
+use App\Annexe\containers\ShopSection\ShopProducts\Repositories\ProductRepository;
+use App\Annexe\Ship\Core\Abstracts\Controllers\ControllerCore;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ShopCartController extends Controller
+class ShopCartController extends ControllerCore
 {
     /**
      * Display a listing of the resource.

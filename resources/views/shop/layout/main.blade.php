@@ -64,7 +64,7 @@
                     <a class="n-link" href="">Доставка</a>
                 </li>
                 <li class="n-item">
-                    <a class="n-link" href="{{route('contacts.index')}}">Контакты</a>
+                    <a class="n-link" href="{{route('contact.index')}}">Контакты</a>
                 </li>
             </ul>
         </div>

@@ -14,16 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-//Route::middleware(['auth:sanctum'])->group(function() {
-//    Route::group(['prefix' => 'admin', 'namespace' => '\App\Http\Controllers\Admin'], function() {
-//        Route::resource('orders', 'AdminOrderController' );
-//        Route::resource('categories', 'AdminOrdersController');
-//        Route::resource('products', 'AdminProductController');
-//        Route::get('edit-contacts', 'AdminContactController@index')->name('edit-contacts');
-//        Route::resource('products/files', 'AdminFileController');
-//    });
-//});
+
 

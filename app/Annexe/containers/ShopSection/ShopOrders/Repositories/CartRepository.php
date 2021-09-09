@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Annexe\containers\ShopSection\ShopOrders\Repositories;
 
 
 class CartRepository

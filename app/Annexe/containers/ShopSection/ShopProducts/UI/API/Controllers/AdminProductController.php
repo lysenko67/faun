@@ -40,14 +40,14 @@ class AdminProductController extends ApiControllerCore
 
         if (!empty($request['category']) && $request['category'] != 'all') {
 
-            $products = $this->productRepository->getAllOrdersOnlyCategory($request['category'], $request['count']);
+            $products = $this->productRepository->getAllProductsOnlyCategory($request['category'], $request['count']);
 
         } else {
 
             $products = $this->productRepository->getAllProducts($request['count']);
 
         }
-//dd($products);
+
         return response()->json([
             'products' => ProductResource::collection($products),
             'paginate' => [
@@ -67,7 +67,6 @@ class AdminProductController extends ApiControllerCore
     public function store(ProductRequest $request)
     {
         $this->productService->addNewProduct($request->all());
-//        return response()->json($request);
     }
 
     /**

@@ -22,7 +22,6 @@ class RoutesLoader
     public static function getRoutsApi() {
         $path = self::getAbsolutePath();
         foreach (glob("$path/*/*/*/UI/API/Routes/*.php") as $route) {
-//            dd($route);
             include $route;
         }
     }

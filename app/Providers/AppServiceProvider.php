@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Annexe\containers\ShopSection\ShopCategories\Repositories\CategoryRepository;
+use App\Annexe\containers\ShopSection\ShopContacts\Repositories\ContactRepository;
 use App\Models\Category;
 use App\Models\Contact;
 use Illuminate\Pagination\Paginator;
@@ -29,9 +31,11 @@ class AppServiceProvider extends ServiceProvider
     {
         if (app()->runningInConsole() === false) {
 
-            $categories = Category::orderBy('id')->get();
+            $category = new CategoryRepository();
+            $categories = $category->getAllCategories();
 
-            $contact = Contact::all()[0];
+            $contactRepository = new ContactRepository();
+            $contact = $contactRepository->getContacts();
 
             View::share(compact('categories', 'contact'));
 

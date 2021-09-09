@@ -36,6 +36,18 @@ class CategoryRepository extends CoreRepository
         return $result;
     }
 
+    public function getCategory($slug)
+    {
+        $category = $this
+            ->startConditions()
+            ->select($this->columns)
+            ->where('slug', $slug)
+            ->first()
+            ->toArray();
+
+        return $category;
+    }
+
     /**
      * @param $slug
      * @return mixed
