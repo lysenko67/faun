@@ -1,0 +1,20 @@
+.search {
+    background-color: inherit;
+}
+
+.search-input {
+    border-left: none;
+}
+
+.dropdown-item:focus {
+    background: #ccc;
+}
+
+.input-group {
+    width: 86%;
+}
+
+#check-search {
+    width: 86%;
+    display: none;
+}

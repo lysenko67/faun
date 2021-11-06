@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\AddOrders;
+namespace App\Annexe\containers\ShopSection\ShopOrders\Services;
 
 
-use App\Models\ProductOrders;
+use App\Annexe\containers\ShopSection\ShopOrders\Models\ProductOrders;
 use Illuminate\Support\Facades\DB;
 
 class AddOrders
@@ -31,16 +31,25 @@ class AddOrders
             if (preg_match('/id_.+/', $key)) {
                 $key = str_replace('id_', '', $key);
 
-                $product_order->create([
-                    'order_id' => $this->order->id,
-                    'vendor_code' => $key,
-                    'qty' => $this->arrQty[$key],
-                    'sum' => $item,
-                    'title' => $this->arrTitle[$key]
-                ]);
+//                $product_order->create([
+//                    'order_id' => $this->order->id,
+//                    'vendor_code' => $key,
+//                    'qty' => $this->arrQty[$key],
+//                    'sum' => $item,
+//                    'title' => $this->arrTitle[$key]
+//                ]);
 
+                $product_order->order_id = $this->order->id;
+                $product_order->vendor_code = $key;
+                $product_order->qty = $this->arrQty[$key];
+                $product_order->sum = $item;
+                $product_order->title = $this->arrTitle[$key];
+
+                $res = $product_order->save();
             }
         }
+
+        return $res;
     }
 
     public function update()

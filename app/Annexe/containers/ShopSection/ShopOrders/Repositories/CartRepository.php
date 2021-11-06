@@ -5,7 +5,7 @@ namespace App\Annexe\containers\ShopSection\ShopOrders\Repositories;
 
 class CartRepository
 {
-    public function addToCart($product, $qty_product = 1)
+    public function addToCart($product, $qty_product = 1, $heightSm)
     {
         $id = $product['id'];
         if (session()->has("cart.$id")) {
@@ -13,7 +13,8 @@ class CartRepository
             session()->put("cart.$id", [
                 'id' => $id,
                 'qty_product' => $value + $qty_product,
-                'price' => $product['price'] * ($value + $qty_product),
+                'product' => $heightSm,
+                'price' => ($product['price'] * $heightSm) * ($value + $qty_product),
                 'product_slug' => $product['slug'],
                 'category_slug' => $product['category']['slug'],
                 'title' => $product['title'],
@@ -23,7 +24,8 @@ class CartRepository
             session()->put("cart.$id", [
                 'id' => $id,
                 'qty_product' => $qty_product,
-                'price' => $product['price'],
+                'product' => $heightSm,
+                'price' => $product['price'] * $heightSm,
                 'product_slug' => $product['slug'],
                 'category_slug' => $product['category']['slug'],
                 'title' => $product['title'],

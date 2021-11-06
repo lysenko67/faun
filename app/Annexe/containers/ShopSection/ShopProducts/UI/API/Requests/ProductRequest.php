@@ -33,7 +33,7 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-
+            'author.required' => 'Введите имя автора'
         ];
     }
 }

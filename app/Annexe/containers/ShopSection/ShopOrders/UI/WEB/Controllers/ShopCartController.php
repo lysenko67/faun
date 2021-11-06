@@ -31,19 +31,21 @@ class ShopCartController extends ControllerCore
     public function store(Request $request, ProductRepository $productRepository)
     {
         $data = $request->json()->all();
-        $product = $productRepository->getCartProduct($data['id']);
+        $product = $productRepository->getCartProduct($data['payload']['id']);
+//        return response()->json($data['payload']['heightSm']);
 
         $qty = 1;
         $cart = new CartRepository();
-        $cart->addToCart($product, $qty);
+        $cart->addToCart($product, $qty, $data['payload']['heightSm']);
 
         $result = session()->get('result');
-        $product = session()->get('cart.'.$data['id']);
+        $product = session()->get('cart.'.$data['payload']['id']);
 
         return response()->json([
             'result' => $result['sum'],
             'qty' => $result['qty'],
             'qty_product' => $product['qty_product'],
+            'heightSm' => $data['payload']['heightSm'],
             'price' => $product['price']
         ], JsonResponse::HTTP_OK);
     }

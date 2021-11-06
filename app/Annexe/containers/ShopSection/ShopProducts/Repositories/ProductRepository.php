@@ -43,7 +43,7 @@ class ProductRepository extends CoreRepository
     /**
      * @return mixed
      */
-    public function getAllProducts($count)
+    public function getAllProducts($count=10000)
     {
         $products = $this
             ->startConditions()
@@ -54,8 +54,7 @@ class ProductRepository extends CoreRepository
                 'images:id,product_id,img,id'
             ])
             ->latest()
-            ->paginate($count);
-
+            ->paginate($count=10000);
         return $products;
     }
 

@@ -87,6 +87,13 @@ class OrderRepository extends CoreRepository
         return $order;
     }
 
+    public function createOrder($data)
+    {
+        return $this
+            ->startConditions()
+            ->create($data);
+    }
+
     /**
      * @param $data
      * @param $id

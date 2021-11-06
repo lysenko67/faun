@@ -2,7 +2,7 @@
 
 use App\Annexe\containers\ShopSection\ShopOrders\UI\WEB\Controllers\ShopOrderController;
 
-Route::resource('orders', ShopOrderController::class)
+Route::resource('shop-orders', ShopOrderController::class)
     ->only([
         "store"
     ]);

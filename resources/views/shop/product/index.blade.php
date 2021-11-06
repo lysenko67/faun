@@ -69,7 +69,11 @@
 
 {{--                </div>--}}
                 <div>
-                    Цена: {{$product->price}} руб.
+                    Высота:&nbsp;
+                    <input id="heightSm" type="number" style="width: 60px" value="25">
+                    см.&nbsp;&nbsp;
+                    Цена: <span id="price">{{25 * $product->price}}</span> руб.
+                    <input id="priceLocalStorage" type="hidden" value="{{$product->price}}">
                 </div>
             </div>
             <div style="margin-top: 30px">
@@ -98,7 +102,7 @@
                             <img src="{{asset('storage/images/'.$product['id'].'/'.$product->images[0]->img)}}" alt="" width="100">
                         </div>
                         <div class="col-9">
-                            <p class="fs-5">{{$product->title}} <span>{{$product->price}} руб.</span></p>
+                            <p class="fs-5">{{$product->title}} <span id="priceModal"></span> руб.</p>
                             <div>
                                 <span>Колличество: </span>
                                 <input data-id="{{$product->id}}" type="button" class="add-buttom del-qty" value="-"
@@ -112,7 +116,7 @@
                     </div>
                 </div>
                 <div style="border-top: none; text-align: center; padding-bottom: 1rem; padding-top: 1rem">
-                    <button type="button" data-bs-dismiss="modal" class="btn btn-outline-secondary" data-bs-dismiss="modal">Продолжиит покупки</button>
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-outline-secondary" data-bs-dismiss="modal">Продолжить покупки</button>
                     <button id="to-cart" type="button" class="btn btn-outline-success">Перейти в корзину</button>
                 </div>
             </div>
@@ -126,6 +130,22 @@
             document.getElementById('to-cart').addEventListener('click', function() {
                 myModal.toggle()
                 window.location.href = document.location.protocol + '//' + document.location.host + '/cart'
+            })
+
+            const heightSm = document.getElementById('heightSm')
+
+            const price = document.getElementById('price')
+            const priceModal = document.getElementById('priceModal')
+            localStorage.setItem('price', priceLocalStorage.value)
+            const getPrice = localStorage.getItem('price')
+
+            document.getElementById('heightSm').addEventListener('input', function() {
+                if(heightSm.value < 25) {
+                    heightSm.value = 25
+                }
+
+                price.innerHTML = heightSm.value * getPrice
+                priceModal.innerHTML = heightSm.value * getPrice
             })
         })()
     </script>

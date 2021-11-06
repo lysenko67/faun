@@ -12,7 +12,7 @@
             @include('shop.layout.breadcrumbs')
 
             @if(!empty($cart))
-                <form id="order" name="order">
+                <form id="order" method="post" action="{{route('shop-orders.store')}}" name="order">
 {{--                <form id="order" name="order" method="post" action="{{route('orders')}}">--}}
                     @csrf
 
@@ -69,21 +69,36 @@
                                 <label class="col-sm-3 col-form-label">*Телефон</label>
                                 <div class="col-sm-9">
                                     <span data-err="phone" class="errors-forms"></span>
-                                    <input type="text" class="form-control clear-err" name="phone" placeholder="Телефон">
+                                    <input
+                                        type="text"
+                                        class="form-control @error('phone') is-invalid @enderror"
+                                        name="phone"
+                                        placeholder="Телефон"
+                                    >
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label">*Имя Фамилия</label>
                                 <div class="col-sm-9">
                                     <span data-err="name" class="errors-forms"></span>
-                                    <input type="text" class="form-control clear-err" name="name" placeholder="Имя Фамилия">
+                                    <input
+                                        type="text"
+                                        class="form-control @error('name') is-invalid @enderror"
+                                        name="name"
+                                        placeholder="Имя Фамилия"
+                                    >
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label">*Email</label>
                                 <div class="col-sm-9">
                                     <span data-err="email" class="errors-forms"></span>
-                                    <input type="text" class="form-control clear-err" name="email" placeholder="Email">
+                                    <input
+                                        type="text"
+                                        class="form-control @error('email') is-invalid @enderror"
+                                        name="email"
+                                        placeholder="Email"
+                                    >
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -99,25 +114,45 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label">Город/село</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="city" id="city">
+                                    <input
+                                        type="text"
+                                        class="form-control @error('city') is-invalid @enderror"
+                                        name="city"
+                                        id="city"
+                                    >
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label">Улица</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="street" id="street">
+                                    <input
+                                        type="text"
+                                        class="form-control @error('street') is-invalid @enderror"
+                                        name="street"
+                                        id="street"
+                                    >
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label">Дом/корп/кв</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="house" id="house">
+                                    <input
+                                        type="text"
+                                        class="form-control @error('house') is-invalid @enderror"
+                                        name="house"
+                                        id="house"
+                                    >
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label">Индекс</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="index" id="index">
+                                    <input
+                                        type="text"
+                                        class="form-control @error('index') is-invalid @enderror"
+                                        name="index"
+                                        id="index"
+                                    >
                                 </div>
                             </div>
                         </div>
@@ -131,73 +166,4 @@
         </div>
     </div>
 
-    <script>
-        (function () {
-            const buy = document.getElementById('buy')
-            if(buy) {
-                buy.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    buy.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" stroke="#ccc"><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)" stroke-width="2"><circle stroke-opacity=".5" cx="18" cy="18" r="18"/> <path d="M36 18c0-9.94-8.06-18-18-18"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"/></path></g></g></svg>'
-                    buy.style.background = '#6c757d'
-                    buy.disabled = true
-
-                    const forms = document.forms.order.elements
-
-                    fetch('orders', {
-                        method: "POST",
-                        headers: {
-                            'X-CSRF-TOKEN': document.getElementById('token').getAttribute('content'),
-                            'Accept': 'application/json'
-                        },
-                        body: formsSerialize(forms)
-                    })
-                        .then(response => response.json())
-                        .then(res => {
-                            buy.innerHTML = 'Заказать'
-                            buy.style.background = '#fff'
-                            buy.style.color = '#6c757d'
-                            buy.disabled = false
-
-                            buy.addEventListener('mouseover', () => {
-                                buy.style.background = '#6c757d'
-                                buy.style.color = '#fff'
-                            })
-
-                            buy.addEventListener('mouseout', () => {
-                                buy.style.background = '#fff'
-                                buy.style.color = '#6c757d'
-                            })
-
-                            const errorsForms = document.querySelectorAll('.errors-forms')
-                            errorsForms.forEach(elem => {
-                                let data = elem.getAttribute('data-err')
-                                if(data in res.errors) {
-                                    elem.textContent = res.errors[data][0]
-                                }
-                            })
-                        })
-
-                })
-            }
-
-            function formsSerialize(forms) {
-                const formData = new FormData()
-                for (let i = 0; i < forms.length; i++) {
-                    formData.append(forms[i].name, forms[i].value)
-                }
-                return formData
-            }
-
-            function clearForm() {
-                const clear = document.querySelectorAll('.clear-err')
-                clear.forEach(elem => {
-                    elem.addEventListener('click', () => {
-                        elem.previousElementSibling.textContent = ''
-                    })
-                })
-            }
-            clearForm()
-        })()
-
-    </script>
 @endsection

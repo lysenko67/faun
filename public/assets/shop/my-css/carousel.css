@@ -58,16 +58,7 @@ a {
 a:hover {
     color: black;
 }
-.search {
-    background-color: inherit;
-}
 
-.search-input {
-    border-left: none;
-}
-.input-group {
-    width: 86%;
-}
 input[type="text"]:focus {
     box-shadow: none !important;
     border: 1px solid #ced4da;

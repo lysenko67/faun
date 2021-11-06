@@ -13,15 +13,33 @@ addToCart.forEach(elem => {
         if(myModal._element) {
             let modalShow = document.getElementById('myModal').classList.contains('show')
         }
+
         let id = e.target.getAttribute('data-id')
-        postCart(id, qty, qtyProduct, priceSum, myModal, modalShow=null, url='/cart', method='POST', csrf)
+        let price = document.getElementById('price').textContent
+        let heightSm = document.getElementById('heightSm').value
+        const payload = {'id': id, 'price': price, 'heightSm': heightSm}
+
+        postCart(
+            payload,
+            qty,
+            qtyProduct,
+            priceSum,
+            myModal,
+            modalShow=null,
+            url='/cart',
+            method='POST',
+            csrf
+        )
     })
 })
 
 delQty.forEach(elem => {
     elem.addEventListener('click', function (e) {
         let id = e.target.getAttribute('data-id')
-        postCart(id, qty, qtyProduct, priceSum, myModal, modalShow=null, url='/cart/'+id, method='PUT', csrf)
+        let price = document.getElementById('price').textContent
+        let heightSm = document.getElementById('heightSm').value
+        const payload = {'id': id, 'price': price, 'heightSm': heightSm}
+        postCart(payload, qty, qtyProduct, priceSum, myModal, modalShow=null, url='/cart/'+id, method='PUT', csrf)
     })
 })
 
@@ -45,7 +63,6 @@ deleteProduct.forEach(elem => {
         })
             .then(response => response.json())
             .then(res => {
-                console.log(res.result['qty'], res.result['sum'])
                 qty.textContent = res.result['qty']
                 priceSum.textContent = res.result['sum']
 
@@ -60,14 +77,14 @@ deleteProduct.forEach(elem => {
 
 
 
-function postCart(id, qty, qtyProduct, priceSum, myModal, modalShow, url, method, csrf) {
-    if (id) {
+function postCart(payload, qty, qtyProduct, priceSum, myModal, modalShow, url, method, csrf) {
+    if (payload) {
         fetch(url, {
             method: method,
             headers: {
                 'X-CSRF-TOKEN': csrf
             },
-            body: JSON.stringify({'id': id})
+            body: JSON.stringify({'payload': payload})
         })
             .then(response => response.json())
             .then(res => {
@@ -75,7 +92,7 @@ function postCart(id, qty, qtyProduct, priceSum, myModal, modalShow, url, method
                 priceSum.textContent = res.result
 
                 qtyProduct.forEach((elem, index) => {
-                    if(qtyProduct[index].getAttribute('data-id') == id) {
+                    if(qtyProduct[index].getAttribute('data-id') == payload.id) {
                         if(res.qty_product < 1) {
                             if(res.qty == 0) {
                                 document.getElementById('order').remove()
