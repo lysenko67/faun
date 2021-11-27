@@ -5,6 +5,7 @@ namespace App\Annexe\containers\ShopSection\ShopProducts\Repositories;
 
 use App\Annexe\containers\ShopSection\ShopProducts\Models\Product as Model;
 use App\Annexe\containers\ShopSection\ShopProducts\Models\ProductImage;
+use App\Annexe\containers\ShopSection\ShopProducts\Models\ProductGltf;
 use App\Annexe\Ship\Core\Abstracts\Repositories\CoreRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -43,7 +44,7 @@ class ProductRepository extends CoreRepository
     /**
      * @return mixed
      */
-    public function getAllProducts($count=10000)
+    public function getAllProducts($count = 10000)
     {
         $products = $this
             ->startConditions()
@@ -51,10 +52,11 @@ class ProductRepository extends CoreRepository
             ->orderBy('id', 'DESC')
             ->with([
                 'category:id,title,slug',
-                'images:id,product_id,img,id'
+                'images:id,product_id,img,id',
+                'gltfFile:id,product_id,gltf,id'
             ])
             ->latest()
-            ->paginate($count=10000);
+            ->paginate($count = 10000);
         return $products;
     }
 
@@ -72,7 +74,8 @@ class ProductRepository extends CoreRepository
             ->where('category_id', $category_id)
             ->with([
                 'category:id,title,slug',
-                'images:product_id,img'
+                'images:product_id,img',
+                'gltfFile:product_id,gltf'
             ])
             ->latest()
             ->paginate($count);
@@ -97,11 +100,13 @@ class ProductRepository extends CoreRepository
             ])
             ->with([
                 'category:id,title,slug',
-                'images:product_id,img,id'
+                'images:product_id,img,id',
+                'gltfFile:product_id,gltf,id'
             ])
             ->find($id)->toArray();
 
         $product['images'] = array_shift($product['images'])['img'];
+        $product['gltfFile'] = array_shift($product['gltfFile'])['gltf'];
 
         return $product;
     }
@@ -118,7 +123,8 @@ class ProductRepository extends CoreRepository
             ->where('slug', $slug)
             ->with([
                 'category:id,title',
-                'images:product_id,img,id'
+                'images:product_id,img,id',
+                'gltfFile:product_id,gltf,id'
             ])
             ->first();
 
@@ -179,15 +185,41 @@ class ProductRepository extends CoreRepository
     }
 
     /**
+     * @param $gltf
+     */
+    public function createGltf($gltf)
+    {
+        ProductGltf::create($gltf);
+    }
+
+    /**
      * @param $id
      * @param $image
      */
-    public function deleteImage($id, $image, $idImage)
+    public function deleteImage($product_id, $img_name, $image_id)
     {
-        $res = DB::transaction(function() use($id, $image, $idImage) {
-            Storage::delete('public/images/' . $id . '/' . $image);
-            ProductImage::find($idImage)->forceDelete();
+        DB::transaction(function () use ($product_id, $img_name, $image_id) {
+            Storage::delete('public/images/' . $product_id . '/' . $img_name);
+            ProductImage::find($image_id)->forceDelete();
         });
-        return $res;
+    }
+
+    /**
+     * @param $id
+     * @param $image
+     */
+    public function updateGltf($product_id, $fileGltf)
+    {
+        DB::transaction(function () use ($product_id, $fileGltf) {
+
+            Storage::deleteDirectory('public/images/' . $product_id . '/model_3d');
+
+            $fileGltf->storeAs('public/images/' . $product_id . '/model_3d', $fileGltf->getClientOriginalName());
+            $gltf = [
+                'gltf' => $fileGltf->getClientOriginalName(),
+                'product_id' => $product_id
+            ];
+            ProductGltf::where('product_id', $product_id)->update($gltf);
+        });
     }
 }

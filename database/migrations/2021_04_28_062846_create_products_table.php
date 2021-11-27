@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('author')->nullable();
             $table->string('title');
             $table->text('description');
-            $table->integer('price');
+            $table->string('price');
             $table->boolean('in_stock')->default(0);
             $table->timestamps();
         });

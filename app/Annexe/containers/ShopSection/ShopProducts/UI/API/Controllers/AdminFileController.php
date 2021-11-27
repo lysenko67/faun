@@ -17,7 +17,8 @@ class AdminFileController extends ApiControllerCore
     /**
      * @param ProductRepository $productRepository
      */
-    public function __construct(ProductRepository $productRepository) {
+    public function __construct(ProductRepository $productRepository)
+    {
         $this->productRepository = $productRepository;
     }
     /**
@@ -26,10 +27,10 @@ class AdminFileController extends ApiControllerCore
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $image_id)
     {
-        $this->productRepository->deleteImage($id, $request->image, $request->idImage);
+        $data = $request->all();
+        $this->productRepository->deleteImage($data['product_id'], $data['img_name'], $image_id);
         return response()->json(['success' => 'Фото удалено']);
     }
-
 }

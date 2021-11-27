@@ -5,7 +5,6 @@ namespace App\Annexe\containers\ShopSection\ShopProducts\Models;
 use App\Annexe\containers\ShopSection\ShopCategories\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -22,8 +21,14 @@ class Product extends Model
 
     public function images()
     {
-        return $this->hasMany(ProductImage::class );
+        return $this->hasMany(ProductImage::class);
     }
+
+    public function gltfFile()
+    {
+        return $this->hasMany(ProductGltf::class);
+    }
+
 
     public function category()
     {

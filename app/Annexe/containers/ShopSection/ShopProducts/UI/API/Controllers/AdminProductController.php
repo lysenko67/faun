@@ -41,11 +41,9 @@ class AdminProductController extends ApiControllerCore
         if (!empty($request['category']) && $request['category'] != 'all') {
 
             $products = $this->productRepository->getAllProductsOnlyCategory($request['category'], $request['count']);
-
         } else {
 
             $products = $this->productRepository->getAllProducts($request['count']);
-
         }
 
         return response()->json([

@@ -22,14 +22,11 @@ class ProductResource extends JsonResource
             'category' => $this->category->title,
             'category_slug' => $this->category->slug,
             'description' => $this->description,
-            'price' => $this->price,
+            'price' => $this->$this->price,
             'slug' => $this->slug,
             'category_id' => $this->category_id,
             'created_at' => Carbon::parse($this->created_at)->format('Y. m. d'),
             'images' => ImagesResource::collection($this->images),
         ];
     }
-
 }
-
-

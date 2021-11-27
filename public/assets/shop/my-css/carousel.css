@@ -1,11 +1,62 @@
-.carousel-indicators {
+.progress{
     position: relative;
+    background: #b4b3b3;
+    height: 10px;
+    width: 40%;
+}
+.progress-bar-striped{
+    animation: progress-bar-stripes 4s infinite linear;
+}
+.default-size {
+    position: relative;
+    width: 100%;
+    height: 746px;
+}
+.hide {
+    display: none;
+}
+.full-scrin {
+    height: 100vh;
+    width: 100vh;
+}
+.content {
+    margin-top: 130px;
+}
+.content-top {
+    margin-top: 0px;
+}
+#resizeCanvas {
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px; 
+    right: 20px; 
+    z-index: 1001; 
+    border-radius: 50%; 
+    padding: 10px
+}
+#resizeCanvas:hover {
+    background: rgb(97, 97, 97);
 }
 
-.carousel-indicators [data-bs-target] {
-    width: 70px;
-    height: 70px;
+@keyframes progress-bar-stripes{
+    0%{
+        width: 0%;
+    }
+    25%{
+        width: 50%;
+    }
+    50%{
+        width: 75%;
+    }
+    75%{
+        width: 85%;
+    }
+    100%{
+        width: 100%;
+    }
 }
+
+/* ------------------------------------------------ */
 
 .basket {
     position: relative;
